@@ -2,19 +2,19 @@
 
 Hands-on Microsoft Azure Administrator projects organized by AZ-104 exam domain.
 
-### Manage Azure identities and governance (20–25%)
+### Manage Azure identities and governance
 
 - [Governance & Resource Management Project](https://github.com/rafael-hernandezpr/azure-identity-governance-project)
 
-### Implement and manage storage (15–20%)
+### Implement and manage storage 
 
 - Projects coming soon
 
-### Deploy and manage Azure compute resources (20–25%)
+### Deploy and manage Azure compute resources 
 
 - Projects coming soon
 
-### Implement and manage virtual networking (15–20%)
+### Implement and manage virtual networking 
 
 - Projects coming soon
 
