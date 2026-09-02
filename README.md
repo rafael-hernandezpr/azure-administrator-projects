@@ -1,3 +1,3 @@
-### Manage Azure identities and governance 
+### Manage Azure identities and governance (20–25%)
 
-- [Governance & Resource Management Lab](https://github.com/rafael-hernandezpr/azure-identity-governance-project)
+- [Governance & Resource Management Project](https://github.com/rafael-hernandezpr/azure-identity-governance-project)
