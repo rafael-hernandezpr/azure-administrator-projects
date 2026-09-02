@@ -1,6 +1,6 @@
 # Azure Administrator Projects
 
-Hands-on Microsoft Azure Administrator projects organized by AZ-104 exam domain.
+Hands-on Microsoft Azure Administrator projects organized by core administration areas.
 
 ### Manage Azure identities and governance
 
