@@ -1,3 +1,3 @@
-# Azure Administrator Projects
+### Manage Azure identities and governance
 
-Hands-on Microsoft Azure Administrator projects organized by AZ-104 exam domain.
+- [Governance & Resource Management Lab](https://github.com/rafael-hernandezpr/azure-identity-governance-project)
