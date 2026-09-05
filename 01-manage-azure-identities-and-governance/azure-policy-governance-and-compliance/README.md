@@ -105,6 +105,7 @@ Department = IT
 
 ![Governance Test Resource Groups](screenshots/01-Governance-Test-Resource-Groups.png)
 
+
 ## 2. Implemented Allowed Locations Policy
 
 The built-in Azure Policy definition:
@@ -120,6 +121,7 @@ Allowed location = East US
 ### Validation
 
 ![Allowed Locations Do Not Enforce Assignment](screenshots/02-Allowed-Locations-DoNotEnforce-Assignment.png)
+
 
 ## 3. Tested Do Not Enforce vs Enforced Policy
 
@@ -150,6 +152,7 @@ The final validation error confirmed that the deployment failed specifically bec
 
 ![Enforced Policy Validation Failed](screenshots/07-Enforced-Policy-Validation-Failed.png)
 
+
 ## 4. Implemented Mandatory Environment Tagging
 
 The built-in Azure Policy definition:
@@ -175,6 +178,7 @@ A storage account was then created without the required `Environment` tag. Azure
 ![Missing Environment Tag Deployment Blocked](screenshots/09-Missing-Environment-Tag-Deployment-Blocked.png)
 
 This confirmed that the tagging policy was actively enforcing resource metadata standards at deployment time.
+
 
 ## 5. Configured Tag Remediation
 
@@ -217,6 +221,7 @@ The initiative configuration confirmed that all four policy definitions were gro
 The completed initiative definition confirmed the initiative name, category, and included governance policies before assignment.
 
 ![Corporate Governance Initiative Created](screenshots/18-Corporate-Governance-Initiative-Created.png)
+
 
 ## 7. Added Custom Non-Compliance Messages
 
@@ -270,10 +275,30 @@ The final compliance view showed **50% resource compliance**, with one compliant
 
 This final validation demonstrated centralized compliance monitoring across multiple policies and resources within a single Azure Policy Initiative.
 
+--
+
+## Project Outcome
+
+The completed environment provided a centralized Azure governance framework that enforced approved deployment regions, standardized resource tagging, detected non-compliant resources, and grouped multiple controls through a custom Policy Initiative.
+
+The project demonstrated both preventive and corrective governance. Policies were first tested safely using `Do Not Enforce`, then actively enforced with `Deny`, while the `Modify` effect and remediation tasks were used to correct existing configuration issues automatically.
+
+The final environment successfully demonstrated:
+
+- Approved-region enforcement with Azure Policy
+- Mandatory `Environment` and `Department` tagging
+- Detection of non-compliant Azure resources
+- Safe policy rollout using `Do Not Enforce`
+- Deployment blocking using the `Deny` effect
+- Automated correction using `Modify` and remediation tasks
+- Managed identity support for policy remediation
+- Centralized governance through a custom Policy Initiative
+- Compliance monitoring across multiple policies and resources
+
+--
+
 ## Project Summary
 
-This project demonstrated the design and implementation of an Azure Policy governance framework for enforcing organizational standards across Azure resources.
+This project provided hands-on experience designing, enforcing, and validating Azure governance controls using Azure Policy.
 
-The solution included approved-region enforcement, mandatory resource tagging, safe policy testing with `Do Not Enforce`, active denial of non-compliant deployments, automated remediation using the `Modify` effect, and centralized governance through a custom Policy Initiative.
-
-The final environment showed how Azure Policy can detect, prevent, remediate, and centrally monitor compliance issues across multiple resources while reducing manual administrative effort.
+It demonstrated the complete governance lifecycle from safe policy testing and compliance detection through enforcement, automated remediation, Policy Initiatives, and centralized compliance monitoring.
