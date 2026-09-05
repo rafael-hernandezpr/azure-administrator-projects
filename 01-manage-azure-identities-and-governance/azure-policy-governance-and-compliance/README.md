@@ -269,3 +269,11 @@ The final compliance view showed **50% resource compliance**, with one compliant
 ![Initiative 50 Percent Compliance Non-Compliant Resource Identified](screenshots/22-Initiative-50-Percent-Compliance-NonCompliant-Resource-Identified.png)
 
 This final validation demonstrated centralized compliance monitoring across multiple policies and resources within a single Azure Policy Initiative.
+
+## Project Summary
+
+This project demonstrated the design and implementation of an Azure Policy governance framework for enforcing organizational standards across Azure resources.
+
+The solution included approved-region enforcement, mandatory resource tagging, safe policy testing with `Do Not Enforce`, active denial of non-compliant deployments, automated remediation using the `Modify` effect, and centralized governance through a custom Policy Initiative.
+
+The final environment showed how Azure Policy can detect, prevent, remediate, and centrally monitor compliance issues across multiple resources while reducing manual administrative effort.
