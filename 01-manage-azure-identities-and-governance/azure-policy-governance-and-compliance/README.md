@@ -275,7 +275,6 @@ The final compliance view showed **50% resource compliance**, with one compliant
 
 This final validation demonstrated centralized compliance monitoring across multiple policies and resources within a single Azure Policy Initiative.
 
---
 
 ## Project Outcome
 
@@ -294,8 +293,6 @@ The final environment successfully demonstrated:
 - Managed identity support for policy remediation
 - Centralized governance through a custom Policy Initiative
 - Compliance monitoring across multiple policies and resources
-
---
 
 ## Project Summary
 
