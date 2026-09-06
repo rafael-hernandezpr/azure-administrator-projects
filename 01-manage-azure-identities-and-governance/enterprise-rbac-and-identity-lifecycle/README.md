@@ -49,55 +49,31 @@ The objective is to support normal business operations while maintaining least p
 
 Department managers were granted scoped Owner access with RBAC conditions that limited which roles they could assign and to which employees.
 
-Sarah was given Owner access to `RG-IT-Production`, but her role-assignment capability was constrained so she could delegate only the Contributor role to Alex.
+Sarah was given Owner access to `RG-IT-Production`, with delegation restricted so she could assign only the Contributor role to Alex.
 
 ![Sarah delegated RBAC condition](screenshots/01-sarah-delegated-rbac-condition.png)
 
-The final assignment confirmed that Sarah's administrative authority was scoped to the IT Production resource group.
-
-![Sarah Owner assignment](screenshots/19-sarah-owner-review-and-assign.png)
-
-Sarah could then assign Contributor access to Alex without receiving unrestricted role-assignment authority across the subscription.
-
-![Alex Contributor assignment](screenshots/20-alex-contributor-review-and-assign.png)
-
-The same delegation model was implemented for the Networking department. Michael received scoped Owner access to `RG-Networking`, with his delegation restricted to the Network Contributor role and approved employees.
+The same controlled delegation model was implemented for Networking. Michael received Owner access to `RG-Networking`, with his role-assignment authority restricted to approved Network Contributor assignments.
 
 ![Michael delegated RBAC condition](screenshots/02-michael-delegated-rbac-condition.png)
 
-![Michael Owner assignment](screenshots/21-michael-owner-review-and-assign.png)
-
-Michael was then able to assign Network Contributor to Emily within the approved scope.
-
-![Emily Network Contributor assignment](screenshots/22-emily-network-contributor-review-and-assign.png)
-
-This demonstrated controlled administrative delegation while preserving least privilege.
+This demonstrated delegated administration without granting unrestricted role-assignment authority.
 
 ---
 
 ### 2. Group-Based Development Access
 
-Development access was managed through the `GRP-Azure-Developers` Microsoft Entra security group instead of assigning Contributor directly to every developer.
+Development access was managed through the `GRP-Azure-Developers` Microsoft Entra security group instead of assigning Contributor directly to each developer.
 
-The security group was assigned Contributor at the `RG-Development` scope.
+The group received Contributor access to `RG-Development`.
 
 ![Development group Contributor assignment](screenshots/03-development-group-contributor-assignment.png)
 
-Developers could then be managed through group membership.
-
-![Development group members](screenshots/23-development-group-members.png)
-
-Chris was added to the Development security group as part of the employee onboarding scenario.
-
-![Chris added to Developers group](screenshots/24-chris-added-to-developers-group.png)
-
-Azure IAM showed the Development resource group's final role assignments, including the security group as Contributor.
-
-![Development role assignments](screenshots/25-development-role-assignments-overview.png)
-
-Effective access was then validated for Chris. Azure confirmed that his Contributor permission originated from `GRP-Azure-Developers`, rather than from a direct role assignment.
+Effective access was then validated for Chris. Azure confirmed that his Contributor permission came through `GRP-Azure-Developers`.
 
 ![Chris group-based effective access](screenshots/04-chris-group-based-effective-access.png)
+
+This demonstrated scalable access management through group membership.
 
 ---
 
@@ -111,64 +87,43 @@ The password-reset policy was configured with approved authentication methods.
 
 ![SSPR authentication methods](screenshots/06-sspr-authentication-methods.png)
 
-A phone authentication method was registered for the test user so SMS could be used during password recovery.
-
-![SSPR phone authentication method](screenshots/26-sspr-phone-authentication-method.png)
-
-A forgotten-password scenario was then simulated. The user was required to verify their identity using the registered mobile phone.
-
-![SSPR SMS verification](screenshots/27-sspr-sms-verification-step.png)
-
-After verification, the user was allowed to choose a new password.
-
-![SSPR new password](screenshots/28-sspr-new-password-step.png)
-
-Microsoft confirmed that the password reset completed successfully.
+A forgotten-password scenario was then simulated, and Microsoft confirmed that the password reset completed successfully.
 
 ![SSPR password reset success](screenshots/07-sspr-password-reset-success.png)
 
-The user was then able to return to the Azure environment using the recovered account.
-
-![Azure access after password reset](screenshots/29-sspr-post-reset-azure-access.png)
+This validated the complete SSPR workflow from configuration to successful recovery.
 
 ---
 
 ### 4. Employee Onboarding and Department Transfer
 
-Chris was initially onboarded into Development and received Contributor access through membership in `GRP-Azure-Developers`.
+Chris was initially onboarded into Development and received access through group membership.
 
 Later, the business transferred Chris from Development to Networking.
 
-As part of the transfer, his Development access was removed before new Networking permissions were granted.
-
-Michael's delegated authority was updated to permit him to onboard Chris into the Networking environment.
-
-Chris then received Active Permanent Network Contributor access to `RG-Networking`.
+His Development access was removed, and he was granted Network Contributor access to `RG-Networking`.
 
 ![Chris Networking assignment](screenshots/08-chris-networking-transfer-assignment.png)
 
-This demonstrated how access can follow an employee's changing business responsibilities without retaining unnecessary permissions from the previous department.
+This demonstrated how access can be updated when an employee changes departments without retaining unnecessary permissions from the previous role.
+
 ---
 
 ### 5. Excessive Privilege Incident
 
 An intentional security incident was introduced by granting Emily Owner at the subscription scope.
 
-Emily normally required only Network Contributor within `RG-Networking`, making the subscription-level Owner assignment an excessive privilege.
+Emily normally required only Network Contributor access within `RG-Networking`, making the subscription-level Owner assignment excessive.
 
 ![Emily excessive subscription Owner](screenshots/09-emily-excessive-subscription-owner.png)
 
-The broader permission demonstrated the potential blast radius of an incorrectly scoped privileged role.
-
-Azure Activity Log was then used to investigate the administrative change and identify the role-assignment operation.
+Azure Activity Log was used to investigate and trace the privileged role assignment.
 
 ![Activity Log Owner role assignment](screenshots/10-activity-log-owner-role-assignment.png)
 
-After the excessive privilege was identified, the subscription-level Owner assignment was removed.
+After the issue was identified, the excessive Owner assignment was removed and least privilege was restored.
 
 ![Excessive Owner role removed](screenshots/11-excessive-owner-role-removed.png)
-
-Emily retained only the access required for her Networking responsibilities, restoring the environment to least privilege.
 
 ---
 
@@ -176,59 +131,53 @@ Emily retained only the access required for her Networking responsibilities, res
 
 David was intentionally given both direct Contributor access and group-based Contributor access to `RG-Development`.
 
-The direct role assignment was removed, but David still retained access.
+After the direct role assignment was removed, David still retained access.
 
-Azure IAM **Check access** was used to investigate the remaining effective permission.
+Azure IAM Check access revealed that the remaining permission came through `GRP-Azure-Developers`.
 
 ![David hidden group-based access](screenshots/12-hidden-group-based-access-david.png)
 
-The investigation showed that David's remaining Contributor permission originated from `GRP-Azure-Developers`.
-
-This demonstrated why removing a direct role assignment does not necessarily remove a user's effective Azure access when another access path still exists.
+This demonstrated why removing a direct assignment does not always remove effective access.
 
 ---
 
 ### 7. Offboarding and Account Recovery
 
-David was later used for a complete employee offboarding scenario.
+David was used for a complete employee offboarding scenario.
 
-His Azure access and group memberships were removed, the Microsoft Entra account was disabled, and existing sign-in sessions were revoked.
+His access and group memberships were removed, the Microsoft Entra account was disabled, and active sign-in sessions were revoked.
 
 ![David offboarding and session revocation](screenshots/13-david-offboarding-disabled-revoked.png)
 
-David was then deleted from Microsoft Entra ID.
-
-Because Microsoft Entra retains deleted users temporarily, the identity appeared under **Deleted users** during the soft-delete retention period.
+The account was then deleted and appeared under Microsoft Entra Deleted users during the soft-delete retention period.
 
 ![David soft-deleted user](screenshots/14-david-soft-deleted-user.png)
 
-A simulated rehire scenario was then introduced.
-
-Instead of creating a new identity, David's existing Microsoft Entra account was restored.
+A simulated rehire scenario followed, and David's account was restored instead of creating a new identity.
 
 ![David user restored](screenshots/15-david-user-restored.png)
 
-This demonstrated both the offboarding lifecycle and recovery of a recently deleted employee identity.
+This demonstrated both offboarding and recovery of a recently deleted employee identity.
 
 ---
 
 ### 8. Final Audit and Governance Review
 
-After the operational scenarios were completed, John performed a final access review as the organization's auditor.
+John performed a final access review of the subscription and departmental resource groups.
 
 At the subscription scope, the final environment showed Rafael as Owner and John as Reader, with the temporary excessive privilege removed.
 
 ![Final subscription access review](screenshots/16-final-subscription-access-review.png)
 
-The Networking environment was then reviewed to verify departmental roles, inherited subscription permissions, and manager delegation.
+The Networking environment was reviewed to verify scoped departmental permissions and inherited subscription access.
 
 ![Final Networking access review](screenshots/17-final-networking-access-review.png)
 
-Finally, the Development environment was reviewed to confirm that Contributor access continued to be managed through `GRP-Azure-Developers` while subscription-level permissions were inherited correctly.
+Finally, the Development environment was reviewed to confirm group-based Contributor access and inherited subscription permissions.
 
 ![Final Development access review](screenshots/18-final-development-access-review.png)
 
-The final audit confirmed that the environment returned to its intended least-privilege access model after all onboarding, transfer, troubleshooting, incident-response, offboarding, and recovery scenarios were completed.
+The final audit confirmed that the environment returned to its intended least-privilege access model.
 
 ## Project Summary
 
