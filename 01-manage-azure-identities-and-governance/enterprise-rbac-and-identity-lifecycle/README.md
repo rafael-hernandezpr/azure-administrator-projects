@@ -1,7 +1,7 @@
 # Enterprise RBAC & Identity Lifecycle Project | Microsoft Azure
 
 <p align="center">
-  <img src="./screenshots/azure-identity-rbac-operations-overview.png" alt="Azure Identity, RBAC & Access Operations Overview" width="100%">
+  <img src="./screenshots/azure-identity-rbac-access-operations-overview.png" alt="Azure Identity, RBAC & Access Operations Overview" width="100%">
 </p>
 
 ## Project Overview
