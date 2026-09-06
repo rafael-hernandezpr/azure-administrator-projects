@@ -4,6 +4,7 @@ Hands-on Microsoft Azure Administrator projects organized by core administration
 
 ### Manage Azure identities and governance
 
+- [Enterprise RBAC & Identity Lifecycle Project](https://github.com/rafael-hernandezpr/azure-administrator-projects/tree/main/01-manage-azure-identities-and-governance/enterprise-rbac-and-identity-lifecycle)
 - [Governance & Resource Management Project](https://github.com/rafael-hernandezpr/azure-identity-governance-project)
 - [Policy Governance & Compliance Project](https://github.com/rafael-hernandezpr/azure-administrator-projects/tree/main/01-manage-azure-identities-and-governance/azure-policy-governance-and-compliance)
 
