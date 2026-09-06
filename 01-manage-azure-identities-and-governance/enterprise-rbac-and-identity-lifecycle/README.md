@@ -6,13 +6,15 @@
 
 ## Project Overview
 
+## Project Overview
+
 This project simulates an existing small-business Microsoft Azure environment where users, groups, resource groups, and supporting resources were preconfigured so the focus could remain on day-to-day Azure Administrator responsibilities.
 
-The project was built around simulated business tickets, access requests, employee changes, troubleshooting cases, and security incidents across IT Production, Networking, and Development.
+The project was built around simulated business tickets, access requests, employee changes, troubleshooting cases, and security incidents across IT Production, Networking, and Development. Managers and employees were assigned realistic tasks such as granting access, validating storage permissions, working with Network Security Groups, resolving access problems, and responding to intentionally misconfigured or excessive permissions.
 
-Each departmental scenario involved Azure RBAC, Microsoft Entra ID, delegated administration, and least-privilege access. Relevant manager and employee accounts were used to validate permissions from the user perspective rather than relying only on administrator-side IAM configuration.
+Each departmental scenario required the assigned user to perform or validate a specific operational task rather than simply review IAM settings. Relevant manager and employee accounts were used to confirm that Azure RBAC, group-based access, storage permissions, networking permissions, and delegated administration behaved as intended.
 
-The goal was to demonstrate realistic identity and access operations, controlled delegation, effective-access validation, and auditable governance within an active Azure environment.
+The goal was to demonstrate realistic Azure operations by responding to business requests, fixing access-related problems, validating user permissions, investigating suspicious activity, and restoring the environment to a least-privilege state.
 
 ## Project Highlights
 
