@@ -6,19 +6,13 @@
 
 ## Project Overview
 
-This project role-plays an existing small-business Microsoft Azure environment in which the organization, employees, Microsoft Entra identities, Azure subscription, departmental resource groups, and supporting resources are treated as already established.
+This project simulates an existing small-business Microsoft Azure environment where users, groups, resource groups, and supporting resources were preconfigured so the focus could remain on day-to-day Azure Administrator responsibilities.
 
-The required users, groups, resource groups, and test resources were preconfigured as lab prerequisites so the project could focus on the day-to-day operational responsibilities of an Azure Administrator rather than basic environment creation.
+The project was built around simulated business tickets, access requests, employee changes, troubleshooting cases, and security incidents across IT Production, Networking, and Development.
 
-The project was structured around simulated business tickets, access requests, employee changes, troubleshooting cases, and security incidents.
+Each departmental scenario involved Azure RBAC, Microsoft Entra ID, delegated administration, and least-privilege access. Relevant manager and employee accounts were used to validate permissions from the user perspective rather than relying only on administrator-side IAM configuration.
 
-Each department participated in its own role-play scenario involving managers, employees, Azure RBAC permissions, and departmental resources.
-
-Where appropriate, I signed in using the relevant manager and employee accounts to validate that permissions worked from the user's perspective rather than relying only on administrator-side IAM configuration.
-
-The objective was to simulate realistic identity and access operations while maintaining least privilege, controlled delegation, separation of duties, and auditable access management.
-
----
+The goal was to demonstrate realistic identity and access operations, controlled delegation, effective-access validation, and auditable governance within an active Azure environment.
 
 ## Project Highlights
 
