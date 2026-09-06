@@ -1,192 +1,446 @@
-#  Enterprise RBAC & Identity Lifecycle Project | Microsoft Azure
+# Enterprise RBAC & Identity Lifecycle Project | Microsoft Azure
+
+<p align="center">
+  <img src="./screenshots/azure-identity-rbac-operations-overview.png" alt="Azure Identity, RBAC & Access Operations Overview" width="100%">
+</p>
 
 ## Project Overview
 
-This project role-plays an existing small-business Azure environment in which the company, employees, Microsoft Entra identities, Azure subscription structure, resource groups, and supporting test resources are treated as already established.
+This project role-plays an existing small-business Microsoft Azure environment in which the organization, employees, Microsoft Entra identities, Azure subscription, departmental resource groups, and supporting resources are treated as already established.
 
-To make the simulation possible, the required users, security groups, resource groups, and Azure resources were preconfigured as lab prerequisites. These setup activities are not the primary focus of the project.
+The required users, groups, resource groups, and test resources were preconfigured as lab prerequisites so the project could focus on the day-to-day operational responsibilities of an Azure Administrator rather than basic environment creation.
 
-The project instead focuses on the day-to-day responsibilities of an Azure Administrator operating within an active business environment. The goal was to simulate realistic identity, access, and governance operations rather than simply demonstrate how to create Azure resources.
+The project was structured around simulated business tickets, access requests, employee changes, troubleshooting cases, and security incidents.
 
-Throughout the project, I responded to business requests, access changes, security incidents, and employee lifecycle events while applying least-privilege principles and validating the resulting permissions directly in Azure.
+Each department participated in its own role-play scenario involving managers, employees, Azure RBAC permissions, and departmental resources.
+
+Where appropriate, I signed in using the relevant manager and employee accounts to validate that permissions worked from the user's perspective rather than relying only on administrator-side IAM configuration.
+
+The objective was to simulate realistic identity and access operations while maintaining least privilege, controlled delegation, separation of duties, and auditable access management.
+
+---
 
 ## Project Highlights
 
-- Implemented scoped Azure RBAC across subscription and resource-group levels using Owner, Contributor, Network Contributor, and Reader roles.
-- Configured delegated administration with Azure RBAC conditions to restrict which roles managers could assign and to whom.
-- Used Microsoft Entra security groups for scalable group-based access and validated effective permissions through inheritance and membership.
-- Configured and tested Self-Service Password Reset (SSPR) using registered authentication methods.
-- Simulated employee onboarding, department transfer, offboarding, soft-delete recovery, and rehire scenarios.
-- Investigated excessive privileges, hidden access paths, and administrative changes using IAM views and Azure Activity Log.
+- Implemented Azure RBAC across subscription and resource-group scopes using Owner, Contributor, Network Contributor, and Reader.
+- Configured delegated administration with RBAC conditions limiting which roles department managers could assign and to whom.
+- Performed separate operational role-play scenarios for IT Production, Networking, and Development.
+- Tested IT Production resource access through a storage-related employee scenario.
+- Tested Networking permissions through Network Security Group administration.
+- Implemented Microsoft Entra security-group-based access for Development.
+- Validated permissions using the relevant manager and employee accounts.
+- Configured and tested Microsoft Entra Self-Service Password Reset.
+- Simulated employee onboarding, department transfer, offboarding, soft deletion, restoration, and return to work.
+- Investigated excessive privilege and suspicious administrative activity through Azure Activity Log.
+- Troubleshot hidden effective access caused by simultaneous direct and group-based role assignments.
+- Performed final subscription and departmental access reviews to confirm least privilege.
+
+---
 
 ## Business Scenario
 
-The organization is a small business already operating in Microsoft Azure. Its Microsoft Entra tenant, employee identities, Azure subscription, departmental resource groups, and supporting test resources are treated as part of an existing environment.
+The organization is a small business already operating in Microsoft Azure.
 
-The company operates multiple departments, including IT Production, Networking, and Development. Managers are responsible for their departments, employees require different levels of Azure access, and an auditor independently reviews permissions and administrative activity.
+The company maintains three operational departments:
 
-As the Azure Administrator, I am responsible for maintaining secure access across the environment while responding to day-to-day operational events such as access requests, delegated administration, employee onboarding, department transfers, password recovery, excessive privilege incidents, offboarding, account restoration, and access reviews.
+- IT Production
+- Networking
+- Development
 
-The objective is to support normal business operations while maintaining least privilege, separation of duties, controlled delegation, and auditable access management.
+Each department has a manager responsible for its Azure resources and employees who require different levels of access.
 
-## Environment / Roles
+Normal administrative work begins through simulated tickets, access requests, employee changes, or incidents.
+
+Department managers handle approved operational requests within their delegated authority, while the Azure Administrator maintains final responsibility for subscription-level governance and privileged access.
+
+An independent auditor also has read-only access to review permissions and administrative activity.
+
+The project demonstrates how these responsibilities interact during normal business operations as well as during security incidents and employee lifecycle events.
+
+---
+
+## Environment and Roles
 
 | Identity | Business Role | Azure / Entra Responsibility |
 |---|---|---|
-| Rafael | Azure Administrator / Director | Subscription Owner and final authority for access and governance |
-| Cloud Admin | Entra Administrator | Microsoft Entra identity and authentication administration |
-| Sarah | IT Manager | Manages access to the IT Production environment |
-| Alex | IT Employee | Contributor access to IT Production resources |
-| Michael | Networking Manager | Manages access to the Networking environment |
-| Emily | Network Technician | Network Contributor within the Networking resource group |
-| Chris | Employee / Department Transfer | Initially onboarded to Development and later transferred to Networking |
-| David | Developer | Receives Development access through Microsoft Entra security-group membership |
-| John | Auditor | Subscription Reader responsible for reviewing access and administrative activity |
-
-## Implementation / Role-Play Scenarios
-
-### 1. Delegated RBAC Administration
-
-Department managers were granted scoped Owner access with RBAC conditions that limited which roles they could assign and to which employees.
-
-Sarah was given Owner access to `RG-IT-Production`, with delegation restricted so she could assign only the Contributor role to Alex.
-
-![Sarah delegated RBAC condition](screenshots/01-sarah-delegated-rbac-condition.png)
-
-The same controlled delegation model was implemented for Networking. Michael received Owner access to `RG-Networking`, with his role-assignment authority restricted to approved Network Contributor assignments.
-
-![Michael delegated RBAC condition](screenshots/02-michael-delegated-rbac-condition.png)
-
-This demonstrated delegated administration without granting unrestricted role-assignment authority.
+| Rafael | Cloud / IT Director / Azure Administrator | Subscription Owner and final authority for access and governance |
+| Cloud Admin | Microsoft Entra Administrator | Identity, authentication, and Entra administration |
+| Sarah | IT Manager | Manages `RG-IT-Production` |
+| Alex | IT Support Specialist | Contributor access to `RG-IT-Production` |
+| Michael | Network Manager | Manages `RG-Networking` |
+| Emily | Network Technician | Network Contributor within `RG-Networking` |
+| David | Developer | Development access through `GRP-Azure-Developers` |
+| Chris | Employee / Department Transfer | Initially Development, later transferred to Networking |
+| John | Auditor | Subscription Reader for independent access reviews |
 
 ---
 
-### 2. Group-Based Development Access
+## Departmental Azure Structure
 
-Development access was managed through the `GRP-Azure-Developers` Microsoft Entra security group instead of assigning Contributor directly to each developer.
+```text
+Azure Subscription
+│
+├── RG-IT-Production
+│   ├── Sarah — Owner / Delegated Manager
+│   └── Alex — Contributor
+│
+├── RG-Networking
+│   ├── Michael — Owner / Delegated Manager
+│   └── Emily — Network Contributor
+│
+└── RG-Development
+    └── GRP-Azure-Developers — Contributor
+        ├── David
+        └── Chris
+
+John — Reader at Subscription
+Rafael — Owner at Subscription
+```
+
+## 1. IT Production Department Role-Play
+
+A simulated operational request required the IT Production team to manage resources within its departmental resource group.
+
+Instead of giving the IT Manager unrestricted subscription-level control, Sarah received scoped administrative authority over `RG-IT-Production`.
+
+Her Owner role included an Azure RBAC condition that restricted her role-assignment authority so that she could delegate only the approved Contributor role to the appropriate IT employee.
+
+![Sarah delegated RBAC condition](screenshots/01-it-sarah-delegated-rbac-condition.png)
+
+Sarah then delegated Contributor access to Alex, the IT Support Specialist.
+
+The scenario moved beyond reviewing IAM from the administrator account. The relevant employee account was used to validate that Alex could actually work with the IT Production resources available to him.
+
+A storage-related administrative scenario was used to verify that his Contributor access functioned as expected while remaining scoped to the IT Production environment.
+
+![Alex storage role-play](screenshots/02-it-alex-storage-roleplay.png)
+
+### Outcome
+
+The IT Production role-play demonstrated:
+
+- ticket-driven access administration
+- scoped departmental ownership
+- controlled RBAC delegation
+- Contributor-level employee access
+- storage-resource access validation
+- least-privilege administration
+
+- ---
+
+## 2. Networking Department Role-Play
+
+A simulated Networking access request required the department to manage network resources within `RG-Networking`.
+
+Michael, acting as Network Manager, received scoped administrative responsibility for the Networking resource group.
+
+His delegated authority was restricted so that he could manage approved Networking access without receiving unrestricted control over the Azure subscription.
+
+![Michael delegated RBAC condition](screenshots/03-networking-michael-delegated-rbac-condition.png)
+
+Emily, acting as Network Technician, received Network Contributor access appropriate to her responsibilities.
+
+The scenario then moved from IAM configuration into a real Networking task.
+
+Using Emily's account, Network Security Group permissions were tested directly to verify that she could work with NSG rules and perform the expected Networking administration within her assigned scope.
+
+![Emily NSG role-play](screenshots/04-networking-emily-nsg-roleplay.png)
+
+### Outcome
+
+The Networking role-play demonstrated:
+
+- delegated departmental administration
+- Network Contributor RBAC
+- Network Security Group administration
+- validation from the assigned employee account
+- scoped network permissions
+- least-privilege access
+
+---
+
+## 3. Development Department Role-Play
+
+The Development department used a group-based access model instead of assigning Contributor directly to every developer.
+
+A Microsoft Entra security group named `GRP-Azure-Developers` was used to manage Development access centrally.
 
 The group received Contributor access to `RG-Development`.
 
-![Development group Contributor assignment](screenshots/03-development-group-contributor-assignment.png)
+![Development group Contributor assignment](screenshots/05-development-group-contributor-assignment.png)
 
-Effective access was then validated for Chris. Azure confirmed that his Contributor permission came through `GRP-Azure-Developers`.
+Chris was added to the Development group and his effective access was reviewed to confirm that his Contributor permission came through `GRP-Azure-Developers`.
 
-![Chris group-based effective access](screenshots/04-chris-group-based-effective-access.png)
+![Chris group effective access](screenshots/06-development-chris-group-effective-access.png)
 
-This demonstrated scalable access management through group membership.
+This model allowed Development access to be controlled through group membership rather than repeated individual Azure RBAC assignments.
 
----
+The relevant developer accounts were also used during the project to validate that the assigned group-based permissions worked as intended from the employee perspective.
 
-### 3. Self-Service Password Reset
+### Outcome
 
-Self-Service Password Reset was enabled for a selected Microsoft Entra security group rather than for the entire organization.
+The Development role-play demonstrated:
 
-![SSPR selected group](screenshots/05-sspr-selected-group.png)
-
-The password-reset policy was configured with approved authentication methods.
-
-![SSPR authentication methods](screenshots/06-sspr-authentication-methods.png)
-
-A forgotten-password scenario was then simulated, and Microsoft confirmed that the password reset completed successfully.
-
-![SSPR password reset success](screenshots/07-sspr-password-reset-success.png)
-
-This validated the complete SSPR workflow from configuration to successful recovery.
+- Microsoft Entra security groups
+- group-based Azure RBAC
+- scalable access management
+- effective-access validation
+- simplified onboarding and access removal
+- least-privilege administration
 
 ---
 
-### 4. Employee Onboarding and Department Transfer
+## 4. Self-Service Password Reset Role-Play
 
-Chris was initially onboarded into Development and received access through group membership.
+A password-recovery scenario was introduced so that employees could recover access without requiring an administrator to manually reset every forgotten password.
 
-Later, the business transferred Chris from Development to Networking.
+Self-Service Password Reset was enabled for a selected Microsoft Entra group rather than being enabled for the entire tenant.
 
-His Development access was removed, and he was granted Network Contributor access to `RG-Networking`.
+![SSPR selected group](screenshots/07-sspr-selected-group.png)
 
-![Chris Networking assignment](screenshots/08-chris-networking-transfer-assignment.png)
+Approved authentication methods were configured for the recovery process.
 
-This demonstrated how access can be updated when an employee changes departments without retaining unnecessary permissions from the previous role.
+![SSPR authentication methods](screenshots/08-sspr-authentication-methods.png)
 
----
+The password-reset workflow was then tested from the user perspective.
 
-### 5. Excessive Privilege Incident
+The identity-verification process was completed and Microsoft confirmed that the password reset succeeded.
 
-An intentional security incident was introduced by granting Emily Owner at the subscription scope.
+![SSPR password reset success](screenshots/09-sspr-password-reset-success.png)
 
-Emily normally required only Network Contributor access within `RG-Networking`, making the subscription-level Owner assignment excessive.
+### Outcome
 
-![Emily excessive subscription Owner](screenshots/09-emily-excessive-subscription-owner.png)
+The SSPR role-play demonstrated:
 
-Azure Activity Log was used to investigate and trace the privileged role assignment.
+- scoped SSPR deployment
+- user authentication-method configuration
+- self-service password recovery
+- successful end-user validation
+- reduced administrator dependency for routine password resets
 
-![Activity Log Owner role assignment](screenshots/10-activity-log-owner-role-assignment.png)
+  ---
 
-After the issue was identified, the excessive Owner assignment was removed and least privilege was restored.
+## 5. Employee Department Transfer — Chris
 
-![Excessive Owner role removed](screenshots/11-excessive-owner-role-removed.png)
+Chris originally worked in the Development department and received Contributor access to `RG-Development` through membership in `GRP-Azure-Developers`.
 
----
+A simulated employee-change request then transferred Chris from Development to Networking.
 
-### 6. Hidden Access Troubleshooting
+As part of the transfer, his Development access was removed so that he would not retain permissions that were no longer required for his job.
 
-David was intentionally given both direct Contributor access and group-based Contributor access to `RG-Development`.
+Chris was then granted Network Contributor access to `RG-Networking`.
 
-After the direct role assignment was removed, David still retained access.
+![Chris Networking transfer assignment](screenshots/10-chris-networking-transfer-assignment.png)
 
-Azure IAM Check access revealed that the remaining permission came through `GRP-Azure-Developers`.
+The new permissions were validated to confirm that his access now matched his Networking responsibilities.
 
-![David hidden group-based access](screenshots/12-hidden-group-based-access-david.png)
+### Outcome
 
-This demonstrated why removing a direct assignment does not always remove effective access.
+The department-transfer role-play demonstrated:
 
----
-
-### 7. Offboarding and Account Recovery
-
-David was used for a complete employee offboarding scenario.
-
-His access and group memberships were removed, the Microsoft Entra account was disabled, and active sign-in sessions were revoked.
-
-![David offboarding and session revocation](screenshots/13-david-offboarding-disabled-revoked.png)
-
-The account was then deleted and appeared under Microsoft Entra Deleted users during the soft-delete retention period.
-
-![David soft-deleted user](screenshots/14-david-soft-deleted-user.png)
-
-A simulated rehire scenario followed, and David's account was restored instead of creating a new identity.
-
-![David user restored](screenshots/15-david-user-restored.png)
-
-This demonstrated both offboarding and recovery of a recently deleted employee identity.
+- employee lifecycle access changes
+- removal of outdated departmental permissions
+- assignment of new role-based access
+- prevention of unnecessary access accumulation
+- least-privilege access after a job-role change
 
 ---
 
-### 8. Final Audit and Governance Review
+## 6. Excessive Privilege Incident — Emily
 
-John performed a final access review of the subscription and departmental resource groups.
+A security incident was intentionally introduced to demonstrate the risk of assigning permissions at the wrong Azure scope.
 
-At the subscription scope, the final environment showed Rafael as Owner and John as Reader, with the temporary excessive privilege removed.
+Emily normally required only Network Contributor access within `RG-Networking`.
 
-![Final subscription access review](screenshots/16-final-subscription-access-review.png)
+She was instead granted Owner at the Azure subscription scope.
 
-The Networking environment was reviewed to verify scoped departmental permissions and inherited subscription access.
+![Emily excessive subscription Owner](screenshots/11-emily-excessive-subscription-owner.png)
 
-![Final Networking access review](screenshots/17-final-networking-access-review.png)
+Because Azure RBAC permissions inherit downward, the subscription-level Owner assignment gave Emily authority far beyond the Networking department.
 
-Finally, the Development environment was reviewed to confirm group-based Contributor access and inherited subscription permissions.
+The subscription Activity Log was reviewed to investigate how the elevated role had been granted.
 
-![Final Development access review](screenshots/18-final-development-access-review.png)
+![Activity Log Owner role grant](screenshots/12-activity-log-owner-role-grant.png)
 
-The final audit confirmed that the environment returned to its intended least-privilege access model.
+While operating with excessive permissions, Emily performed administrative activity outside her normal departmental responsibilities.
+
+David noticed unexpected activity at the subscription level and raised the issue for investigation.
+
+The Azure Activity Log showed activity involving the unauthorized `rg-eastus` resource group and identified Emily as the initiator.
+
+![Activity Log Emily rg-eastus](screenshots/13-activity-log-emily-rg-eastus.png)
+
+Additional administrative activity demonstrated the wider blast radius created by the subscription-level Owner assignment.
+
+![Emily security rule activity](screenshots/14-emily-security-rule-activity.png)
+
+After the incident was confirmed, Emily's excessive subscription-level Owner role was removed.
+
+![Emily Owner role removed](screenshots/15-emily-owner-role-removed.png)
+
+### Outcome
+
+The excessive-privilege role-play demonstrated:
+
+- RBAC scope inheritance
+- excessive privilege risk
+- unauthorized activity outside a normal departmental scope
+- employee detection and escalation
+- Azure Activity Log investigation
+- administrative attribution
+- privilege remediation
+- restoration of least privilege
+
+---
+
+## 7. Hidden Access Troubleshooting — David
+
+A troubleshooting scenario was intentionally created to demonstrate how Azure effective access can come from more than one permission path.
+
+David already received Contributor access to `RG-Development` through membership in `GRP-Azure-Developers`.
+
+A second direct Contributor role assignment was intentionally added to David.
+
+This created two independent access paths:
+
+```text
+David
+│
+├── Contributor — Direct assignment
+│
+└── Contributor — GRP-Azure-Developers
+```
+
+Azure IAM showed both assignments.
+
+![David direct and group Contributor](screenshots/16-david-direct-and-group-contributor.png)
+
+The simulated support issue stated that David's direct access had been removed.
+
+The direct Contributor assignment was selected for removal.
+
+![David direct role selected for removal](screenshots/17-david-direct-role-selected-for-removal.png)
+
+After the direct assignment was removed, David still retained Contributor access.
+
+Investigation of his effective access showed that the remaining permission was coming through membership in `GRP-Azure-Developers`.
+
+![David group access remains](screenshots/18-david-group-access-remains.png)
+
+### Outcome
+
+The hidden-access troubleshooting role-play demonstrated:
+
+- direct RBAC assignments
+- group-based RBAC assignments
+- effective-access investigation
+- hidden permission paths
+- why removing one role assignment may not remove all access
+- the importance of checking group membership and inherited permissions
+
+---
+
+## 8. Employee Offboarding and Return — David
+
+David was then used for a complete employee offboarding and return-to-work scenario.
+
+When David left the organization, his access was removed and his Microsoft Entra account was secured.
+
+The account was disabled and active sign-in sessions were revoked.
+
+![David disabled and sessions revoked](screenshots/19-david-disabled-sessions-revoked.png)
+
+His account was then deleted from Microsoft Entra ID.
+
+Because recently deleted users remain recoverable temporarily, David appeared under Deleted users during the soft-delete retention period.
+
+![David soft-deleted user](screenshots/20-david-soft-deleted-user.png)
+
+Shortly afterward, the business scenario changed:
+
+David regretted leaving and returned to the company.
+
+Because his original Microsoft Entra identity was still recoverable, the existing account was restored instead of creating an entirely new identity.
+
+![David user restored](screenshots/21-david-user-restored.png)
+
+His Development access was then validated again through `GRP-Azure-Developers`.
+
+![David Development access restored](screenshots/22-david-development-access-restored.png)
+
+### Outcome
+
+The employee lifecycle role-play demonstrated:
+
+- employee offboarding
+- access removal
+- account disabling
+- active-session revocation
+- Microsoft Entra user deletion
+- soft-delete recovery
+- employee return / rehire
+- restoration of appropriate group-based access
+
+---
+
+## 9. Final Audit and Governance Review
+
+After the departmental role-plays, access changes, troubleshooting cases, and security incidents were completed, a final governance review was performed.
+
+The Azure subscription was reviewed to verify that unnecessary privileged assignments had been removed.
+
+![Final subscription access review](screenshots/23-final-subscription-access-review.png)
+
+The Networking resource group was reviewed to confirm the intended departmental roles and inherited subscription access.
+
+![Final Networking access review](screenshots/24-final-networking-access-review.png)
+
+The Development resource group was reviewed to verify the intended group-based Contributor access model.
+
+![Final Development access review](screenshots/25-final-development-access-review.png)
+
+### Outcome
+
+The final audit confirmed that the environment had returned to the intended least-privilege access model after all simulated operational events.
+
+---
+
+## Operational Workflow Demonstrated
+
+Throughout the project, administrative work followed a realistic operational pattern:
+
+```text
+Business Request / Ticket
+        ↓
+Identify User or Department
+        ↓
+Determine Required Azure Scope
+        ↓
+Select Least-Privilege Role
+        ↓
+Assign or Delegate Access
+        ↓
+Validate Using Relevant Account
+        ↓
+Troubleshoot Effective Access
+        ↓
+Review Activity Logs When Needed
+        ↓
+Remediate Excessive Permissions
+        ↓
+Audit Final Environment
+```
 
 ## Project Summary
 
-This project simulated the day-to-day identity and access responsibilities of an Azure Administrator working within an existing small-business Azure environment.
+This project simulated the day-to-day identity, access, and governance responsibilities of an Azure Administrator operating within an established small-business Azure environment.
 
-The project focused on secure access management, delegated administration, identity lifecycle operations, troubleshooting, auditing, and least-privilege governance across Microsoft Azure and Microsoft Entra ID.
+Through departmental role-plays, simulated access requests, employee lifecycle events, troubleshooting scenarios, and security incidents, the project demonstrated how Azure RBAC and Microsoft Entra ID are used to manage access in realistic operational situations.
+
+The project covered the full access-management lifecycle, including delegated administration, group-based access, password recovery, department transfers, excessive privilege remediation, hidden-access troubleshooting, offboarding, account restoration, and final governance review.
+
+---
 
 ## Key Takeaways
 
-This project reinforced that Azure access can come from multiple paths, including direct role assignments, group membership, and inherited permissions.
-
-It also demonstrated the importance of limiting privileged access, validating effective permissions, using controlled delegation, and maintaining a secure identity lifecycle from onboarding through offboarding and recovery.
+This project reinforced that Azure access can come from multiple paths, including direct role assignments, group membership, inherited permissions, and the scope where RBAC is applied. It also demonstrated the importance of applying least privilege, validating effective access, using group-based access where appropriate, limiting delegated administrative authority, reviewing Azure Activity Logs during investigations, removing outdated or excessive permissions, and keeping employee access aligned with current business responsibilities throughout the identity lifecycle.
