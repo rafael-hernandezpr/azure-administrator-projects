@@ -6,8 +6,6 @@
 
 ## Project Overview
 
-## Project Overview
-
 This project simulates an existing small-business Microsoft Azure environment where users, groups, resource groups, and supporting resources were preconfigured so the focus could remain on day-to-day Azure Administrator responsibilities.
 
 The project was built around simulated business tickets, access requests, employee changes, troubleshooting cases, and security incidents across IT Production, Networking, and Development. Managers and employees were assigned realistic tasks such as granting access, validating storage permissions, working with Network Security Groups, resolving access problems, and responding to intentionally misconfigured or excessive permissions.
