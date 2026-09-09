@@ -10,7 +10,7 @@ Hands-on Microsoft Azure Administrator projects organized by core administration
 
 ### Implement and manage storage 
 
-- [Azure Secure Storage Administration Project](02-implement-and-manage-storage/azure-secure-storage-administration-v1)****
+- [Azure Secure Storage Administration Project](02-implement-and-manage-storage/azure-secure-storage-administration-v1)
 
 ### Deploy and manage Azure compute resources 
 
