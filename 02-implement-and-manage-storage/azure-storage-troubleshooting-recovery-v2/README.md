@@ -46,7 +46,7 @@ A new resource group named `rg-storage-recovery-v2` was created in **East US** t
 
 The resource group became the administrative container for the storage account, Recovery Services vault, and later the Log Analytics workspace used throughout the project.
 
-Next, a general-purpose v2 storage account named `storagev2recovery` was deployed. The account used **Standard performance** and **Locally Redundant Storage (LRS)**, which was sufficient for this lab while keeping the environment simple and cost-conscious.
+Next, a general-purpose v2 storage account named `storagev2recovery` was deployed. The account used **Standard performance** and **Locally Redundant Storage (LRS)**, which was sufficient for this project while keeping the environment simple and cost-conscious.
 
 ![Storage Account Deployment](screenshots/03-storage-account-deployment-complete.png)
 
@@ -75,7 +75,7 @@ A Recovery Services vault named `rsv-storage-recovery-v2` was created in the sam
 
 ![Recovery Services Vault Configuration](screenshots/05-recovery-services-vault-configuration.png)
 
-The vault was configured with **Locally Redundant Storage (LRS)** for backup storage. This was appropriate for the project because the lab focused on backup administration and recovery workflows rather than cross-region disaster recovery.
+The vault was configured with **Locally Redundant Storage (LRS)** for backup storage. This was appropriate for the project because the project focused on backup administration and recovery workflows rather than cross-region disaster recovery.
 
 The `storagev2recovery` storage account was then selected as the source of the Azure File Share to protect, and `company-files` was added as the backup item.
 
