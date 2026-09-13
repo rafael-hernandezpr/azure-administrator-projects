@@ -1,5 +1,7 @@
 # Azure Storage Private Networking Architecture — V3
 
+![Azure Storage Private Networking Architecture](screenshots/azure-storage-private-networking-architecture.png)
+
 ## Project Overview
 
 This project demonstrates how to secure Azure Storage by combining private networking, DNS integration, network access restrictions, and connectivity validation.
