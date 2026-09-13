@@ -29,14 +29,7 @@ The organization also needs administrators to be able to identify and resolve DN
 
 ## Project Highlights
 
-- Built a segmented Azure virtual network with dedicated subnets for client access, Private Endpoint connectivity, and Service Endpoint testing.
-- Secured Azure Blob Storage with a Private Endpoint and validated private connectivity through the private IP `10.30.2.4`.
-- Configured Azure Private DNS using `privatelink.blob.core.windows.net` and verified name resolution from inside the VNet.
-- Restricted public network access and confirmed unauthorized access from an external client was blocked.
-- Configured a Microsoft.Storage Service Endpoint and validated access from an approved subnet while external public access remained denied.
-- Compared Private Endpoint and Service Endpoint connectivity behavior using real PowerShell and SAS-based tests.
-- Simulated a DNS outage by deleting the storage A record, reproduced the connectivity failure, restored the record, and validated recovery.
-- Performed end-to-end troubleshooting using `nslookup`, `Test-NetConnection`, and `curl`.
+Built and validated a segmented Azure storage network architecture using dedicated subnets for client access, Private Endpoint connectivity, and Service Endpoint testing. Secured Azure Blob Storage with a Private Endpoint and verified private connectivity through IP 10.30.2.4, while configuring Azure Private DNS with privatelink.blob.core.windows.net to provide internal name resolution. Public network access was restricted and tested from an external client to confirm denial. A Microsoft.Storage Service Endpoint was also configured and validated from an approved subnet, allowing direct comparison between Private Endpoint and Service Endpoint behavior using PowerShell and SAS-based tests. The project also included a simulated DNS outage by deleting the storage A record, reproducing the connectivity failure, restoring the record, and validating recovery with nslookup, Test-NetConnection, and curl.
 
 ## Azure Resources and Services Used
 
