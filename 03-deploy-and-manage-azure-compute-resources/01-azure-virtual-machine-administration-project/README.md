@@ -1,7 +1,4 @@
-Azure Virtual Machine Administration, Troubleshooting & High Availability Project
-
-
-# Virtual Machine Administration & Incident Response Project
+# Azure Virtual Machine Administration, Troubleshooting & High Availability Project
 
 ## Project Overview
 
