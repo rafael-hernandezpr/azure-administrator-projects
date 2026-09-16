@@ -16,7 +16,7 @@ Hands-on Microsoft Azure Administrator projects organized by core administration
 
 ### Deploy and manage Azure compute resources 
 
-- Projects coming soon
+- [Azure Virtual Machine Administration, Troubleshooting & High Availability Project](https://github.com/rafael-hernandezpr/azure-administrator-projects/tree/main/03-deploy-and-manage-azure-compute-resources/01-azure-virtual-machine-administration-project)
 
 ### Implement and manage virtual networking 
 
