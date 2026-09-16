@@ -1,5 +1,7 @@
 # Azure Virtual Machine Administration, Troubleshooting & High Availability Project
 
+![Azure Virtual Machine Administration, Troubleshooting and High Availability Architecture](screenshots/00-project-architecture.png)
+
 ## Project Overview
 
 This project demonstrates hands-on administration and troubleshooting of Azure virtual machines in a realistic cloud environment. The work included VM deployment, disk management, performance testing, VM resizing, Encryption at Host, NSG troubleshooting, high-availability design, load balancing, failover testing, Availability Sets, VM Scale Sets, and resource movement between resource groups.
@@ -133,11 +135,11 @@ To address the single-point-of-failure risk of relying on only one virtual machi
 
 The scale set was configured with multiple instances and distributed across separate Azure Availability Zones. This allowed the workload to continue running even if one VM instance or one availability zone became unavailable.
 
-![VMSS instance in Availability Zone 1](screenshots/11-vmss-zone-1-instance.png)
+![VMSS instance in Availability Zone 1](screenshots/11-vmss-instance-zone-1.png)
 
 The first VMSS instance was deployed in **Availability Zone 1**.
 
-![VMSS instance in Availability Zone 2](screenshots/12-vmss-zone-2-instance.png)
+![VMSS instance in Availability Zone 2](screenshots/12-vmss-instance-zone-2.png)
 
 The second instance was deployed in **Availability Zone 2**, providing physical separation between the two backend virtual machines within the East US region.
 
@@ -157,7 +159,7 @@ The health probe was configured to monitor the backend instances so Azure could 
 
 IIS was then installed on both VMSS instances. Each server displayed a different webpage so it would be easy to identify which instance was currently responding to the request.
 
-![Load Balancer serving Zone 1](screenshots/14-load-balancer-zone-1-response.png)
+![Load Balancer serving Zone 1](screenshots/14-load-balancer-serving-zone-1.png)
 
 Initial testing showed traffic being successfully served by the VMSS instance in **Availability Zone 1**.
 
@@ -211,3 +213,23 @@ The virtual machine was started and a new RDP connection was tested successfully
 The successful RDP connection confirmed that the VM remained accessible and functional after being moved to the new resource group.
 
 This demonstrated an important Azure administration task: reorganizing resources without rebuilding the virtual machine or disrupting its existing configuration.
+
+## Project Outcome
+
+The project successfully demonstrated the administration, troubleshooting, security, and high-availability capabilities required to manage Azure virtual machines in a realistic environment.
+
+The final solution included a secured standalone Windows Server VM, managed disk expansion, CPU performance troubleshooting and resizing, NSG-based RDP troubleshooting, Encryption at Host, VM Scale Sets across Availability Zones, Azure Load Balancer failover, Availability Set fault/update domain validation, and virtual machine movement between resource groups.
+
+The environment showed how common Azure compute incidents can be identified, remediated, and validated while also improving the resilience and manageability of the workload.
+
+## Key Takeaways
+
+- Azure VM issues should be investigated at both the guest operating system and Azure platform levels.
+- VM resizing can provide additional compute capacity when sustained CPU demand exceeds the current VM size.
+- Managed disks can be expanded without rebuilding the virtual machine, but the operating system volume must also be extended.
+- NSG rule priority directly affects connectivity and is an important part of RDP troubleshooting.
+- Encryption at Host adds an additional protection layer for VM disk-related data handled by the Azure compute host.
+- VM Scale Sets combined with Availability Zones and Azure Load Balancer provide a resilient architecture for multi-instance workloads.
+- Availability Sets provide fault-domain and update-domain separation for individually managed virtual machines.
+- Azure resources can be reorganized between resource groups while preserving the VM configuration and connectivity when dependencies remain valid.
+
