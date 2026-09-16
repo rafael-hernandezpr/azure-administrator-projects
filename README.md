@@ -20,7 +20,7 @@ Hands-on Microsoft Azure Administrator projects organized by core administration
 
 ### Implement and manage virtual networking 
 
-- Projects coming soon
+- [Azure Secure Network Infrastructure Project](https://github.com/rafael-hernandezpr/azure-administrator-projects/tree/main/04-implement-and-manage-virtual-networking/azure-secure-network-infrastructure-project)
 
 ### Monitor and maintain Azure resources
 
